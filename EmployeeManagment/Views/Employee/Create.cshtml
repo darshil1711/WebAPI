@@ -1,0 +1,112 @@
+﻿@model CommonModel.ViewModel.EmployeeDetailsViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/Index.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>EmployeeDetailsViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Create", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", id = "createEmployeeForm" }))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Designation" class="control-label"></label>
+                <select asp-for="DesignationId" asp-items="ViewBag.DesignationList" class="form-control" required>
+                    <option value="">Select a designation</option>
+                </select>
+                <span asp-validation-for="DesignationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfilePicture" class="control-label"></label>
+                <input asp-for="ProfilePictures" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" required />
+                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Salary" class="control-label"></label>
+                <input asp-for="Salary" class="form-control" required />
+                <span asp-validation-for="Salary" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" type="date" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" required />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" id="submitButton" disabled />
+            </div>
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#createEmployeeForm input').on('input', function () {
+                if ($('#createEmployeeForm')[0].checkValidity()) {
+                    $('#submitButton').prop('disabled', false);
+                } else {
+                    $('#submitButton').prop('disabled', true);
+                }
+            });
+
+            // Function to prevent typing in the date input
+            $('#createEmployeeForm input[type="date"]').on('keydown', function (e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    .login-form {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 40px;
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .btn-primary {
+        width: 100%;
+        height: 40px;
+        font-size: 14px;
+        border-radius: 4px;
+    }
+</style>
